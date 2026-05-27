@@ -1,0 +1,28 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "antigravity": {
+      "npm": "@ai-sdk/anthropic",
+      "name": "Antigravity Local",
+      "options": {
+        "baseURL": "http://localhost:8080/v1",
+        "apiKey": "{env:ANTHROPIC_API_KEY}"
+      },
+      "models": {
+        "claude-sonnet-4-6": { "id": "claude-sonnet-4-6", "name": "Claude Sonnet 4.6" },
+        "claude-opus-4-6-thinking": { "id": "claude-opus-4-6-thinking", "name": "Claude Opus 4.6 Thinking" },
+        "gemini-3.1-pro-low": { "id": "gemini-3.1-pro-low", "name": "Gemini 3.1 Pro Low" },
+        "gemini-3.1-flash-lite": { "id": "gemini-3.1-flash-lite", "name": "Gemini 3.1 Flash Lite" },
+        "gemini-3.1-flash-image": { "id": "gemini-3.1-flash-image", "name": "Gemini 3.1 Flash Image" },
+        "gemini-3-flash": { "id": "gemini-3-flash", "name": "Gemini 3 Flash" },
+        "gemini-3-flash-agent": { "id": "gemini-3-flash-agent", "name": "Gemini 3 Flash Agent" },
+        "gemini-pro-agent": { "id": "gemini-pro-agent", "name": "Gemini 3.1 Pro Agent" },
+        "gemini-2.5-flash": { "id": "gemini-2.5-flash", "name": "Gemini 2.5 Flash" },
+        "gemini-2.5-flash-lite": { "id": "gemini-2.5-flash-lite", "name": "Gemini 2.5 Flash Lite" },
+        "gemini-2.5-flash-thinking": { "id": "gemini-2.5-flash-thinking", "name": "Gemini 2.5 Flash Thinking" }
+      }
+    }
+  },
+  "model": "antigravity/claude-sonnet-4-6",
+  "small_model": "antigravity/gemini-3-flash"
+}
