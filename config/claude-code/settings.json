@@ -1,0 +1,68 @@
+{
+  "env": {
+    "ANTHROPIC_MODEL": "claude-opus-4-6-thinking",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "claude-opus-4-6-thinking",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "claude-sonnet-4-6",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "claude-sonnet-4-6",
+    "CLAUDE_CODE_SUBAGENT_MODEL": "claude-sonnet-4-6",
+    "ENABLE_EXPERIMENTAL_MCP_CLI": "true",
+    "ANTHROPIC_BASE_URL": "http://localhost:8080",
+    "ANTHROPIC_AUTH_TOKEN": "test"
+  },
+  "model": "sonnet",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          { "type": "command", "command": "node \"$HOME/.claude/hooks/caveman-activate.js\"", "timeout": 5, "statusMessage": "Loading caveman mode..." }
+        ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          { "type": "command", "command": "$HOME/.npm-global/lib/node_modules/clawmem/bin/clawmem hook postcompact-inject", "timeout": 5 },
+          { "type": "command", "command": "$HOME/.npm-global/lib/node_modules/clawmem/bin/clawmem hook curator-nudge", "timeout": 5 }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          { "type": "command", "command": "node \"$HOME/.claude/hooks/caveman-mode-tracker.js\"", "timeout": 5, "statusMessage": "Tracking caveman mode..." }
+        ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          { "type": "command", "command": "$HOME/.npm-global/lib/node_modules/clawmem/bin/clawmem hook context-surfacing", "timeout": 8 }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": "",
+        "hooks": [
+          { "type": "command", "command": "$HOME/.npm-global/lib/node_modules/clawmem/bin/clawmem hook precompact-extract", "timeout": 5 }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          { "type": "command", "command": "$HOME/.npm-global/lib/node_modules/clawmem/bin/clawmem hook decision-extractor", "timeout": 30 },
+          { "type": "command", "command": "$HOME/.npm-global/lib/node_modules/clawmem/bin/clawmem hook handoff-generator", "timeout": 30 },
+          { "type": "command", "command": "$HOME/.npm-global/lib/node_modules/clawmem/bin/clawmem hook feedback-loop", "timeout": 30 }
+        ]
+      }
+    ]
+  },
+  "enabledPlugins": {
+    "vercel-plugin@vercel-vercel-plugin": true,
+    "vercel@claude-plugins-official": true,
+    "claude-mem@thedotmack": true,
+    "caveman@caveman": true,
+    "skill-codex@skill-codex": true
+  },
+  "effortLevel": "medium"
+}

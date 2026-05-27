@@ -1,0 +1,6 @@
+{
+  "ai.provider": "custom",
+  "ai.custom.baseUrl": "http://localhost:11434/v1",
+  "ai.custom.model": "qwen2.5-coder:7b",
+  "ai.custom.apiKey": "ollama"
+}

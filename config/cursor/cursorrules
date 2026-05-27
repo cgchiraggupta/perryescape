@@ -1,0 +1,70 @@
+# AI Code Generation Security Guidelines — Cursor Rules
+# Place in project root or ~/.cursorrules
+
+## Core Principle
+**UNDERSTAND THE WHOLE PROBLEM BEFORE CODING**
+Never provide patch solutions or quick fixes. Always:
+1. Understand the complete problem domain
+2. Identify root causes and systemic issues
+3. Design comprehensive solutions that address core problems
+4. Consider production implications, not just localhost behavior
+
+---
+
+## 1. Rate Limiting & DDoS Protection
+- Implement rate limiting on ALL public endpoints
+- Use multiple layers: IP-based, user-based, and endpoint-specific
+- Authentication endpoints: 5-10 req/min, API: 100-1000 req/hr
+- Return proper HTTP 429 responses, log violations
+
+## 2. API Key Security
+- NEVER embed API keys in client-side code
+- NEVER commit secrets to version control
+- Always use environment variables
+- Implement a backend proxy for third-party API calls
+
+## 3. Authentication & Authorization
+- Authenticate ALL endpoints except explicitly public
+- Implement proper authorization (not just authentication)
+- Use short-lived access tokens (15-60 min) + refresh tokens (7-30 days)
+- Never trust client-side permission checks
+
+## 4. CORS Configuration
+- NEVER use `Access-Control-Allow-Origin: *` in production
+- Whitelist specific, trusted domains only
+- Configure per environment (dev: localhost, prod: your domain)
+
+## 5. Performance & Scalability
+- Paginate all list endpoints (default: 20-50 items)
+- Use database indexes on frequently queried fields
+- Avoid N+1 queries, implement caching layers
+- Load test before production deployment
+
+## 6. SQL Injection Prevention
+- NEVER concatenate user input into SQL queries
+- ALWAYS use parameterized queries or prepared statements
+- Validate and sanitize ALL user input
+
+## 7. Business Logic Validation
+- Validate business rules server-side, not just UI
+- Verify ownership before modifications
+- Implement idempotency for critical operations
+- Check state transitions are valid
+
+## 8. Error Handling
+- NEVER expose stack traces to clients
+- Log detailed errors server-side
+- Use proper HTTP status codes
+- Implement retry with exponential backoff
+
+## Implementation Checklist
+- [ ] Rate limiting on all endpoints
+- [ ] No API keys in client code or version control
+- [ ] Auth on all non-public endpoints
+- [ ] CORS with specific origins (no wildcards)
+- [ ] Pagination on list endpoints
+- [ ] Parameterized database queries
+- [ ] All user input validated
+- [ ] Business rules enforced server-side
+- [ ] Secure error messages (no stack traces)
+- [ ] Environment variables for all config

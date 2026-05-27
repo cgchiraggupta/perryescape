@@ -1,0 +1,42 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git checkout:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git rm:*)",
+      "Bash(git fetch:*)",
+      "Bash(git clone:*)",
+      "Bash(git push:*)",
+      "Bash(git rebase:*)",
+      "Bash(npm run lint:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run dev:*)",
+      "Bash(pip install:*)",
+      "Bash(pip3 install:*)",
+      "Bash(curl:*)",
+      "Bash(lsof:*)",
+      "Bash(ls:*)",
+      "Bash(gh repo view:*)",
+      "Bash(brew list:*)",
+      "Bash(brew install:*)",
+      "Bash(python3:*)",
+      "Bash(source:*)",
+      "Bash(docker system df:*)",
+      "Bash(du:*)",
+      "Bash(npm cache clean:*)",
+      "Bash(brew cleanup:*)",
+      "Bash(unzip *)",
+      "Bash(npm create *)",
+      "Bash(open *)",
+      "Bash(claude plugin *)",
+      "Bash(mkdir *)",
+      "Bash(rm -rf /tmp/*)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:registry.npmjs.org)",
+      "WebFetch(domain:docs.npmjs.com)"
+    ]
+  }
+}

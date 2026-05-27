@@ -163,5 +163,21 @@ fi
 HOMEBREW_CNF="$(brew --repository 2>/dev/null)/Library/Homebrew/command-not-found/handler.sh"
 [[ -f "$HOMEBREW_CNF" ]] && source "$HOMEBREW_CNF"
 
+# ── Extra tool paths ──────────────────────────
+export PATH="$PATH:$HOME/.spicetify"
+export PATH="$PATH:$HOME/.opencode/bin"
+export PATH="/opt/zig-0.15.2:$PATH"
+export AWS_REGION="eu-north-1"
+export AWS_DEFAULT_REGION="eu-north-1"
+
+# OpenClaw
+[[ -f "$HOME/.openclaw/completions/openclaw.zsh" ]] && source "$HOME/.openclaw/completions/openclaw.zsh"
+
+# Kiro CLI (auto-sourced when running in Kiro)
+[[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh 2>/dev/null)"
+
+# pipx
+export PATH="$PATH:$HOME/.local/bin"
+
 # ── Local overrides (machine-specific, not in repo) ────
 [[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
