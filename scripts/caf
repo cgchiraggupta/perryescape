@@ -1,0 +1,3 @@
+#!/bin/bash
+# Keep Mac awake
+pgrep caffeinate > /dev/null && echo "☕ Already awake" || (caffeinate -dimsu & echo "☕ Mac is now awake")

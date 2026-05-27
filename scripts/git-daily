@@ -1,0 +1,15 @@
+#!/bin/bash
+# Daily git summary — what changed today
+echo "=== 📊 Git Daily Summary ($(date +%Y-%m-%d)) ==="
+echo ""
+
+for repo in "$@"; do
+  if [ -d "$repo/.git" ]; then
+    cd "$repo"
+    echo "--- $(basename "$repo") ---"
+    git log --oneline --after="midnight" --before="tomorrow" --author="$(git config user.name)" 2>/dev/null || echo "  No commits today"
+    echo ""
+  else
+    echo "Not a git repo: $repo"
+  fi
+done

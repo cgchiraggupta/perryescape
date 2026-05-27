@@ -1,0 +1,5 @@
+#!/bin/bash
+# Let Mac sleep
+pkill caffeinate 2>/dev/null
+sudo pmset -a sleep 5 2>/dev/null
+echo "😴 Mac can sleep now"

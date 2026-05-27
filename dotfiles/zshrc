@@ -1,0 +1,167 @@
+# ────────────────────────────────────────────
+# perryescape — .zshrc (modular bootstrap)
+# Managed via ~/perryescape/dotfiles/zshrc
+# ────────────────────────────────────────────
+
+# ── Oh-My-Zsh ──────────────────────────────
+export ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME="robbyrussell"
+
+DISABLE_AUTO_UPDATE="true"
+DISABLE_MAGIC_FUNCTIONS="true"
+ZSH_DISABLE_COMPFIX="true"
+
+plugins=(
+  git
+  zsh-autosuggestions
+  zsh-syntax-highlighting
+  colored-man-pages
+)
+
+[[ -f "$ZSH/oh-my-zsh.sh" ]] && source "$ZSH/oh-my-zsh.sh"
+
+# ── History ─────────────────────────────────
+HISTSIZE=100000
+SAVEHIST=100000
+HISTFILE=~/.zsh_history
+setopt HIST_IGNORE_ALL_DUPS HIST_SAVE_NO_DUPS HIST_REDUCE_BLANKS
+setopt INC_APPEND_HISTORY EXTENDED_HISTORY
+
+# ── Navigation ─────────────────────────────
+setopt AUTO_CD AUTO_PUSHD PUSHD_IGNORE_DUPS PUSHD_SILENT
+
+# ── Completion ─────────────────────────────
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+zstyle ':completion:*' menu select
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' completer _complete _match _approximate
+zstyle ':completion:*:approximate:*' max-errors 1 numeric
+
+# ── Core aliases ───────────────────────────
+alias c='clear'
+alias e='exit'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ll='eza -lah'
+alias la='eza -A'
+alias lt='eza --tree --level=2'
+alias cat='bat'
+
+# ── Editors ────────────────────────────────
+alias edit='cursor'
+alias c.='cursor .'
+alias vs='code'
+alias vsc='code .'
+alias w.='windsurf .'
+alias vim='nvim'
+export EDITOR="nvim"
+
+alias code='open -a "T3 Code (Alpha)"'
+
+# Editor functions
+cursor()   { open -a "Cursor" "$@"; }
+code()     { open -a "T3 Code (Alpha)" "$@"; }
+windsurf() { ~/.codeium/windsurf/bin/windsurf "$@"; }
+
+open_with_cursor() { [[ -d "$1" ]] && { cd "$1" && cursor . & } || echo "Not found: $1"; }
+open_with_code()   { [[ -d "$1" ]] && { cd "$1" && code . & } || echo "Not found: $1"; }
+open_with_wind()   { [[ -d "$1" ]] && { cd "$1" && windsurf . & } || echo "Not found: $1"; }
+
+# ── Project shortcuts ──────────────────────
+alias dev='open_with_cursor ~/development'
+alias k='open_with_cursor ~/kshama'
+alias shakti='open_with_cursor ~/shakti'
+alias l='open_with_cursor ~/links'
+alias vdev='open_with_code ~/development'
+alias wdev='open_with_wind ~/development'
+
+# ── Apps ───────────────────────────────────
+alias b='open -a "Brave Browser"'
+alias s='open -a "Safari"'
+alias a='open -a "Arc"'
+alias tg='open -a "Telegram"'
+alias m='open -a "Mail"'
+
+# ── Git ────────────────────────────────────
+alias gs='git status'
+alias ga='git add'
+alias gaa='git add --all'
+alias gc='git commit -m'
+alias gp='git push'
+alias gl='git pull'
+alias gco='git checkout'
+alias gb='git branch'
+alias glog='git log --oneline --decorate --graph'
+alias grb='git rebase'
+alias gst='git stash'
+alias gstp='git stash pop'
+alias gundo='git reset --soft HEAD~1'
+alias gca='git commit --amend'
+
+# ── Caffeinate ─────────────────────────────
+alias caf='pgrep caffeinate > /dev/null && echo "☕ Already awake" || (caffeinate -dimsu & echo "☕ Mac is now awake")'
+alias uncaf='pkill caffeinate; sudo pmset -a sleep 5 2>/dev/null && echo "😴 Mac can sleep" || echo "😴 Already sleeping"'
+alias cafstatus='pgrep caffeinate > /dev/null && echo "☕ Awake — agents running" || echo "😴 Sleeping"'
+
+# ── System ─────────────────────────────────
+alias myip='curl -s ifconfig.me'
+alias myip-local="ipconfig getifaddr en0"
+alias flushdns='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder'
+alias weather='curl -s "wttr.in/~Delhi?0Q"'
+alias disk='df -h /'
+alias mem='memory_pressure | head -10'
+alias ports='lsof -iTCP -sTCP:LISTEN -P -n'
+
+# ── Search ─────────────────────────────────
+alias f='fzf --preview "bat --color=always {}"'
+alias rgf='rg --files | fzf --preview "bat --color=always {}"'
+
+# ── PATH ───────────────────────────────────
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="/opt/homebrew/bin:$PATH"
+export PATH="$HOME/.bun/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.npm-global/bin:$PATH"
+export BUN_INSTALL="$HOME/.bun"
+
+# ── Language runtimes ──────────────────────
+export LANG=en_US.UTF-8
+export TERM="xterm-256color"
+
+# NVM lazy load
+export NVM_DIR="$HOME/.nvm"
+nvm() {
+  unset -f nvm
+  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"
+  nvm "$@"
+}
+
+# Rust
+[[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
+
+# Bun completions
+[[ -s "$HOME/.bun/_bun" ]] && source "$HOME/.bun/_bun"
+
+# Conda lazy load
+conda() {
+  unset -f conda
+  if [ -f "/opt/anaconda3/etc/profile.d/conda.sh" ]; then
+    . "/opt/anaconda3/etc/profile.d/conda.sh"
+  else
+    export PATH="/opt/anaconda3/bin:$PATH"
+  fi
+  conda "$@"
+}
+
+# ── SSH agent ──────────────────────────────
+if [ -z "$SSH_AUTH_SOCK" ]; then
+  eval "$(ssh-agent -s)" &>/dev/null
+  ssh-add --apple-use-keychain ~/.ssh/id_ed25519 &>/dev/null
+fi
+
+# ── Homebrew command-not-found ─────────────
+HOMEBREW_CNF="$(brew --repository 2>/dev/null)/Library/Homebrew/command-not-found/handler.sh"
+[[ -f "$HOMEBREW_CNF" ]] && source "$HOMEBREW_CNF"
+
+# ── Local overrides (machine-specific, not in repo) ────
+[[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"

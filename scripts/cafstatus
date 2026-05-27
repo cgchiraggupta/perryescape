@@ -1,0 +1,3 @@
+#!/bin/bash
+# Check caffeinate status
+pgrep caffeinate > /dev/null && echo "☕ Awake — agents running" || echo "😴 Sleeping — agents will die"

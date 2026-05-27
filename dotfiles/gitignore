@@ -1,0 +1,40 @@
+# Global gitignore
+# =================
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE
+.idea/
+.vscode/
+*.sublime-*
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.env/
+venv/
+.venv/
+*.so
+
+# Node
+node_modules/
+.npm/
+
+# Rust
+target/
+
+# Go
+vendor/
+
+# Secrets
+.env
+.env.*
+*.pem
+*.key
+*.cert

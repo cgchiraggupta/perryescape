@@ -1,0 +1,25 @@
+[user]
+	email = cg077593@gmail.com
+	name = perry gupta
+[pull]
+	rebase = true
+[color]
+	ui = auto
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smuidge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[credential]
+	helper = osxkeychain
+[credential "https://github.com"]
+	helper =
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper =
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[core]
+	excludesfile = ~/.gitignore
+	editor = nvim
+[init]
+	defaultBranch = main

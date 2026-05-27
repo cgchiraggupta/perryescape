@@ -1,0 +1,15 @@
+# SSH Config Template
+# Copy to ~/.ssh/config on each machine
+# Keys are unique per machine — never commit private keys
+
+Host github.com
+  AddKeysToAgent yes
+  UseKeychain yes
+  IdentityFile ~/.ssh/id_ed25519
+  HostName github.com
+  User git
+
+Host *
+  ServerAliveInterval 60
+  ServerAliveCountMax 3
+  StrictHostKeyChecking accept-new

@@ -1,0 +1,13 @@
+#!/bin/bash
+# Quick system info for new machines
+echo "═══ System Info ═══"
+echo "Host:  $(scutil --get ComputerName 2>/dev/null || hostname)"
+echo "OS:    $(sw_vers -productName) $(sw_vers -productVersion) ($(uname -m))"
+echo "Shell: $SHELL ($(zsh --version | head -1))"
+echo "Brew:  $(brew --version 2>/dev/null | head -1 || echo 'not installed')"
+echo "Python: $(python3 --version 2>/dev/null || echo 'not installed')"
+echo "Node:  $(node --version 2>/dev/null || echo 'not installed')"
+echo "Git:   $(git --version 2>/dev/null || echo 'not installed')"
+echo "Uptime:$(uptime | sed 's/.*up //' | sed 's/,.*//')"
+echo "Disk:  $(df -h / | tail -1 | awk '{print $4 " free of " $2}')"
+echo "═══ ═══════════════ ═══"

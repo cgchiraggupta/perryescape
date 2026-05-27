@@ -1,0 +1,31 @@
+#!/bin/bash
+# Session saver — save/tmux/resume terminal sessions
+# Usage: session save <name> | session load <name> | session list
+
+SESSION_DIR="${SESSION_DIR:-$HOME/.sessions}"
+mkdir -p "$SESSION_DIR"
+
+case "${1:-}" in
+  save)
+    NAME="${2:-default}"
+    pwd > "$SESSION_DIR/$NAME"
+    echo "💾 Session '$NAME' saved: $(cat "$SESSION_DIR/$NAME")"
+    ;;
+  load)
+    NAME="${2:-default}"
+    if [ -f "$SESSION_DIR/$NAME" ]; then
+      cd "$(cat "$SESSION_DIR/$NAME")"
+      echo "📂 Switched to session '$NAME': $(pwd)"
+    else
+      echo "❌ No session '$NAME' found"
+      exit 1
+    fi
+    ;;
+  list)
+    echo "📋 Saved sessions:"
+    ls -1 "$SESSION_DIR" 2>/dev/null || echo "  (none)"
+    ;;
+  *)
+    echo "Usage: session save|load|list [name]"
+    ;;
+esac

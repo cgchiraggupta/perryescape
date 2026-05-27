@@ -1,0 +1,16 @@
+#!/bin/bash
+# Quick tunnel for SSH'ing into remote machines
+# Usage: tunnel <user@host> <local-port> <remote-port>
+if [ "$#" -lt 2 ]; then
+  echo "Usage: tunnel <user@host> <local-port> [remote-port]"
+  echo "Creates a local-forward tunnel: localhost:LOCAL -> host:REMOTE"
+  exit 1
+fi
+
+HOST="$1"
+LOCAL="$2"
+REMOTE="${3:-$2}"
+
+echo "🔌 Tunnel: localhost:$LOCAL → $HOST:$REMOTE"
+ssh -L "$LOCAL:localhost:$REMOTE" -N "$HOST" &
+echo "PID: $!"
